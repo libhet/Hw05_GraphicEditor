@@ -1,7 +1,7 @@
 #ifndef HW05_GRAPHICEDITOR_GRAPHICSVIEW_H
 #define HW05_GRAPHICEDITOR_GRAPHICSVIEW_H
 
-#include "GraphicsModel.h"
+#include "graphics_model.h"
 
 class GraphicsDocumentView {   //View
 private:

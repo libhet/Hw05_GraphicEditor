@@ -1,86 +1,8 @@
 #ifndef HW05_GRAPHICEDITOR_GRAPHICSMODEL_H
 #define HW05_GRAPHICEDITOR_GRAPHICSMODEL_H
 
-#include <memory>
 #include <map>
-
-
-using GraphicsData = std::string;
-
-class Graphics {
-public:
-    virtual ~Graphics() = default;
-    virtual void         SetData(const GraphicsData& data) = 0;
-    virtual GraphicsData GetData() = 0;
-};
-using GraphicsPtr = std::shared_ptr<Graphics>;
-
-class Lenght {
-private:
-    float l;
-public:
-    Lenght() = default;
-
-    size_t px();
-    float  cm();
-    float  mm();
-};
-using LenghtPtr = std::shared_ptr<Lenght>;
-
-class Point : public Graphics {
-private:
-    float x, y;
-public:
-    Point() = default;
-    Point(float x, float y);
-    ~Point() = default;
-
-    void SetData(const GraphicsData& data) override;
-    GraphicsData GetData() override;
-};
-using PointPtr = std::shared_ptr<Point>;
-
-class Line : public Graphics {
-private:
-    Point p1, p2;
-public:
-    Line() = default;
-    Line(const Point& p1, const Point& p2)
-            : p1{p1}, p2{p2}
-    {}
-
-    void SetData(const GraphicsData& data) override;
-    GraphicsData GetData() override;
-};
-using LinePtr = std::shared_ptr<Line>;
-
-class Rectangle : public Graphics {
-private:
-    Point p1,p2;
-public:
-    Rectangle() = default;
-    Rectangle(const Point& p1,const Point& p2)
-            : p1{p1}, p2{p2}
-    {}
-
-    void SetData(const GraphicsData& data) override;
-    GraphicsData GetData() override;
-};
-using RectanglePtr = std::shared_ptr<Rectangle>;
-
-class Circle : public Graphics {
-    Point   center;
-    Lenght  radius;
-public:
-    Circle() = default;
-    Circle(const Point& c, const Lenght& r)
-            : center{c}, radius{r}
-    {}
-
-    void SetData(const GraphicsData& data) override;
-    GraphicsData GetData() override;
-};
-using CirclePtr = std::shared_ptr<Circle>;
+#include "graphics_types.h"
 
 
 class GraphicsDocument {    // MODEL
@@ -138,21 +60,34 @@ public:
         AddGraphics(GetNewIndex(), line);
     }
 
-    template<typename Pointer, typename Type>
-    void AddGraph(const GraphicsData& data) {
-        Pointer pointer(new Type());
-        pointer->SetData(data);
-        AddGraphics(GetNewIndex(),pointer);
-    };
+//    template<typename Pointer, typename Type>
+//    void AddGraph(const GraphicsData& data) {
+//        Pointer pointer(new Type());
+//        pointer->LoadData(data);
+//        AddGraphics(GetNewIndex(),pointer);
+//    };
+//
+//    void AddRectangle(const GraphicsData& data) {
+//        AddGraph<RectanglePtr, Rectangle>(data);
+//    }
+//    void AddCircle(const GraphicsData& data) {
+//        AddGraph<CirclePtr, Circle>(data);
+//    }
+//    void AddLine(const GraphicsData& data) {
+//        AddGraph<LinePtr, Line>(data);
+//    }
 
-    void AddRectangle(const GraphicsData& data) {
-        AddGraph<RectanglePtr, Rectangle>(data);
+    void AddLine(const Line& line) {
+        LinePtr line_p(new Line(line));
+        AddGraphics(GetNewIndex(), line_p);
     }
-    void AddCircle(const GraphicsData& data) {
-        AddGraph<CirclePtr, Circle>(data);
+    void AddCircle(const Circle& circle) {
+        CirclePtr circle_p(new Circle(circle));
+        AddGraphics(GetNewIndex(), circle_p);
     }
-    void AddLine(const GraphicsData& data) {
-        AddGraph<LinePtr, Line>(data);
+    void AddRectangle(const Rectangle& rectangle) {
+        RectanglePtr rectangle_p(new Rectangle(rectangle));
+        AddGraphics(GetNewIndex(), rectangle_p);
     }
 
     const GraphicsPtr& GetGraphics(const GraphicIndex& index) const {

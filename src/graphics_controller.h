@@ -1,8 +1,8 @@
 #ifndef HW05_GRAPHICEDITOR_GRAPHICSCONTROLLER_H
 #define HW05_GRAPHICEDITOR_GRAPHICSCONTROLLER_H
 
-#include "GraphicsView.h"
-#include "GraphicsController.h"
+#include "graphics_view.h"
+#include "graphics_controller.h"
 
 enum class Shape {
     Line,

@@ -1,9 +1,9 @@
 #include <iostream>
 
 
-#include "src/GraphicsController.h"
-#include "src/GraphicsView.h"
-#include "src/GraphicsModel.h"
+#include "src/graphics_controller.h"
+#include "src/graphics_view.h"
+#include "src/graphics_model.h"
 
 
 /// Модель содержит способ хранения данных
