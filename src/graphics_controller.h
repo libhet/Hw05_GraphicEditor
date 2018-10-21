@@ -1,8 +1,7 @@
 #ifndef HW05_GRAPHICEDITOR_GRAPHICSCONTROLLER_H
 #define HW05_GRAPHICEDITOR_GRAPHICSCONTROLLER_H
 
-#include "graphics_view.h"
-#include "graphics_controller.h"
+#include "graphics_model.h"
 
 enum class Shape {
     Line,
@@ -15,18 +14,17 @@ public:
     using ShapeSelector = GraphicsDocument::GraphicIndex ;
 private:
     GraphicsDocumentPtr         m_model;
-    GraphicsDocumentViewPtr     m_view;
 
 public:
-    GraphicsDocumentController(const GraphicsDocumentPtr& model, const GraphicsDocumentViewPtr& view)
-            : m_model(model), m_view(view) {}
+    GraphicsDocumentController(const GraphicsDocumentPtr& model)
+            : m_model(model) {}
 
     void SelectShape(const ShapeSelector& selector) {
         m_model->Select(selector);
     }
 
     void UpdateView() {
-        m_view->Draw();
+        m_model->UpdateView();
     }
 
     void AddShape(Shape shape, const GraphicsData& data) {

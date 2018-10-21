@@ -1,17 +1,17 @@
 #include "export_my_format.h"
 
-void my_format_export::ExportPoint(const GraphicsData &data) {
-
+GraphicsData my_format_export::ExportPoint(const Point &data) const {
+    return nullptr;
 }
 
-void my_format_export::ExportLine(const GraphicsData &data) {
-
+GraphicsData my_format_export::ExportLine(const Line &data) const {
+    return nullptr;
 }
 
-void my_format_export::ExportCircle(const GraphicsData &data) {
-
+GraphicsData my_format_export::ExportCircle(const Circle &data) const {
+    return nullptr;
 }
 
-void my_format_export::ExportRectangle(const GraphicsData &data) {
-
+GraphicsData my_format_export::ExportRectangle(const Rectangle &data) const {
+    return nullptr;
 }

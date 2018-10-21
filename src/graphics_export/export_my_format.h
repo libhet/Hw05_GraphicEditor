@@ -5,13 +5,14 @@
 
 class my_format_export : public IExport {
 public:
-    void ExportPoint(const GraphicsData &data) override;
+protected:
+    GraphicsData ExportPoint(const Point &data) const override;
 
-    void ExportLine(const GraphicsData &data) override;
+    GraphicsData ExportLine(const Line &data) const override;
 
-    void ExportCircle(const GraphicsData &data) override;
+    GraphicsData ExportCircle(const Circle &data) const override;
 
-    void ExportRectangle(const GraphicsData &data) override;
+    GraphicsData ExportRectangle(const Rectangle &data) const override;
 };
 
 

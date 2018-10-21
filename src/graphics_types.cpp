@@ -6,19 +6,34 @@
 #include "graphics_import.h"
 #include "graphics_types.h"
 
-void Point::LoadData(const IImport& loader, const GraphicsData& data) override
-{
+void Point::LoadData(const IImport& loader, const GraphicsData& data) {
     loader.AddPoint(data);
 }
 
-GraphicsData Point::SaveData(const IExport &exporter) {
-    return nullptr;
+void Point::SaveData(const IExport &exporter) const {
+    exporter.SavePoint(*this);
 }
 
 void Line::LoadData(const IImport &loader, const GraphicsData &data) {
     loader.AddLine(data);
 }
 
-GraphicsData Line::SaveData(const IExport &exporter) {
-    return exporter;
+void Line::SaveData(const IExport &exporter) const {
+    exporter.SaveLine(*this);
+}
+
+void Rectangle::LoadData(const IImport &loader, const GraphicsData &data) {
+    loader.AddRectangle(data);
+}
+
+void Rectangle::SaveData(const IExport &exporter) const {
+    exporter.SaveRectangle(*this);
+}
+
+void Circle::LoadData(const IImport &loader, const GraphicsData &data) {
+    loader.AddCircle(data);
+}
+
+void Circle::SaveData(const IExport &exporter) const {
+    exporter.SaveCircle(*this);
 }

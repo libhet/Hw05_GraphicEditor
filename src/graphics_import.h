@@ -22,7 +22,7 @@ public:
     virtual ~IImport()= default;
 
     void    AddPoint(const GraphicsData& data) const {
-
+        m_model->AddPoint(ImportPoint(data));
     }
     void    AddLine(const GraphicsData& data) const {
         m_model->AddLine(ImportLine(data));
@@ -34,6 +34,6 @@ public:
         m_model->AddRectangle(ImportRectangle(data));
     }
 };
-
+using ImportPtr = std::shared_ptr<IImport>;
 
 #endif //HW05_GRAPHICEDITOR_IIMPORT_H

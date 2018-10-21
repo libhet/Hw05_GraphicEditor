@@ -11,25 +11,31 @@ private:
     std::ostream* m_ostream;
 
 protected:
-    virtual GraphicsData ExportPoint(const PointPtr& data) = 0;
-    virtual GraphicsData ExportLine(const LinePtr& data) = 0;
-    virtual GraphicsData ExportCircle(const CirclePtr& data) = 0;
-    virtual GraphicsData ExportRectangle(const RectanglePtr& data) = 0;
+    virtual GraphicsData ExportPoint(const Point& data) const = 0;
+    virtual GraphicsData ExportLine(const Line& data) const = 0;
+    virtual GraphicsData ExportCircle(const Circle& data) const = 0;
+    virtual GraphicsData ExportRectangle(const Rectangle& data) const = 0;
 
 public:
-    void SavePoint(const GraphicsData& data) {
-        *m_ostream << data;
+    explicit IExport(std::ostream& os) : m_ostream{&os} {}
+    virtual ~IExport() = default;
+
+    virtual void SavePoint(const Point& data) const {
+        *m_ostream << ExportPoint(data);
     }
-    void SaveLine(const GraphicsData& data) {
-        *m_ostream << data;
+
+    virtual void SaveLine(const Line& data) const {
+        *m_ostream << ExportLine(data);
     }
-    void SaveCircle(const GraphicsData& data) {
-        *m_ostream << data;
+
+    virtual void SaveCircle(const Circle& data) const {
+        *m_ostream << ExportCircle(data);
     }
-    void SaveRectangle(const GraphicsData& data) {
-        *m_ostream << data;
+
+    virtual void SaveRectangle(const Rectangle& data) const {
+        *m_ostream << ExportRectangle(data);
     }
 };
-
+using ExportPtr = std::shared_ptr<IExport>;
 
 #endif //HW05_GRAPHICEDITOR_IEXPORT_H

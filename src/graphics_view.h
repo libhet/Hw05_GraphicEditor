@@ -6,15 +6,26 @@
 class GraphicsDocumentView {   //View
 private:
     GraphicsDocumentPtr m_model;
+
+protected:
+    virtual void Draw(const Point& point) = 0;
+    virtual void Draw(const Line& point) = 0;
+    virtual void Draw(const Circle& point) = 0;
+    virtual void Draw(const Rectangle& point) = 0;
+
+    void Draw(const Graphics& g) {}
+
 public:
     explicit GraphicsDocumentView(const GraphicsDocumentPtr& model)
             :m_model(model) {}
     void Draw() {
         for( const auto & graphics : *(m_model->GetData()) ) {
-            graphics.second->GetData();     /// Что будет если передавать в GetData this.
-                                            /// Чтобы под конкрутную отрисовку отдавались свои данные.
-                                            /// Тогда модели придется знать что то о View что не есть хорошо
+            Draw(*graphics.second.get());
         }
+    }
+
+    void SetModel(GraphicsDocumentPtr& model) {
+        m_model = model;
     }
 };
 using GraphicsDocumentViewPtr = std::shared_ptr<GraphicsDocumentView>;

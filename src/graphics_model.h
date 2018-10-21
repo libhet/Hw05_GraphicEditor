@@ -4,6 +4,9 @@
 #include <map>
 #include "graphics_types.h"
 
+class GraphicsDocumentView;
+using GraphicsDocumentViewPtr = std::shared_ptr<GraphicsDocumentView>;
+
 
 class GraphicsDocument {    // MODEL
 public:
@@ -17,6 +20,8 @@ private:
     GraphicStoragePtr   m_graphic_storage;
     CounterType         m_graphics_counter;
     GraphicsPtr         m_selected_graphics;
+
+    GraphicsDocumentViewPtr m_view;
 
     Lenght m_width;
     Lenght m_height;
@@ -60,23 +65,27 @@ public:
         AddGraphics(GetNewIndex(), line);
     }
 
-//    template<typename Pointer, typename Type>
-//    void AddGraph(const GraphicsData& data) {
-//        Pointer pointer(new Type());
-//        pointer->LoadData(data);
-//        AddGraphics(GetNewIndex(),pointer);
-//    };
-//
-//    void AddRectangle(const GraphicsData& data) {
-//        AddGraph<RectanglePtr, Rectangle>(data);
-//    }
-//    void AddCircle(const GraphicsData& data) {
-//        AddGraph<CirclePtr, Circle>(data);
-//    }
-//    void AddLine(const GraphicsData& data) {
-//        AddGraph<LinePtr, Line>(data);
-//    }
+    template<typename Pointer, typename Type>
+    void AddGraph(const GraphicsData& data) {
+        Pointer pointer(new Type());
+        pointer->LoadData(data);
+        AddGraphics(GetNewIndex(),pointer);
+    };
 
+    void AddRectangle(const GraphicsData& data) {
+        AddGraph<RectanglePtr, Rectangle>(data);
+    }
+    void AddCircle(const GraphicsData& data) {
+        AddGraph<CirclePtr, Circle>(data);
+    }
+    void AddLine(const GraphicsData& data) {
+        AddGraph<LinePtr, Line>(data);
+    }
+
+    void AddPoint(const Point& point) {
+        PointPtr point_p(new Point(point));
+        AddGraphics(GetNewIndex(), point_p);
+    }
     void AddLine(const Line& line) {
         LinePtr line_p(new Line(line));
         AddGraphics(GetNewIndex(), line_p);
@@ -93,7 +102,6 @@ public:
     const GraphicsPtr& GetGraphics(const GraphicIndex& index) const {
         return m_graphic_storage->at(index);
     }
-
     const GraphicStoragePtr& GetData() const {
         return m_graphic_storage;
     }
@@ -101,16 +109,16 @@ public:
     void Select(const GraphicIndex& index) {
         m_selected_graphics = GetGraphics(index);
     }
-
     void Remove(const GraphicIndex& index) {
         m_graphic_storage->erase(index);
     }
-
     void Clear() {
         m_graphic_storage->clear();
         m_graphics_counter = 0;
         m_selected_graphics.reset();
     }
+
+    void UpdateView();
 };
 using GraphicsDocumentPtr = std::shared_ptr<GraphicsDocument>;
 

@@ -11,8 +11,8 @@ using GraphicsData = std::string;
 class Graphics {
 public:
     virtual ~Graphics() = default;
-    virtual void         LoadData(const IImport& loader, const GraphicsData& data) = 0;
-    virtual GraphicsData SaveData(const IExport& exporter) = 0;
+    virtual void    LoadData(const IImport& loader, const GraphicsData& data) = 0;
+    virtual void    SaveData(const IExport& exporter) const = 0;
 };
 using GraphicsPtr = std::shared_ptr<Graphics>;
 
@@ -37,7 +37,7 @@ public:
     ~Point() = default;
 
     void LoadData(const IImport& loader, const GraphicsData& data) override;
-    GraphicsData SaveData(const IExport &exporter) override;
+    void SaveData(const IExport &exporter) const override;
 };
 using PointPtr = std::shared_ptr<Point>;
 
@@ -51,8 +51,7 @@ public:
     {}
 
     void LoadData(const IImport &loader, const GraphicsData &data) override;
-
-    GraphicsData SaveData(const IExport &exporter) override;
+    void SaveData(const IExport &exporter) const override;
 };
 using LinePtr = std::shared_ptr<Line>;
 
@@ -65,8 +64,8 @@ public:
             : p1{p1}, p2{p2}
     {}
 
-    void LoadData(const GraphicsData& data) override;
-    GraphicsData SaveData() override;
+    void LoadData(const IImport &loader, const GraphicsData &data) override;
+    void SaveData(const IExport &exporter) const override;
 };
 using RectanglePtr = std::shared_ptr<Rectangle>;
 
@@ -79,8 +78,9 @@ public:
             : center{c}, radius{r}
     {}
 
-    void LoadData(const GraphicsData& data) override;
-    GraphicsData SaveData() override;
+    void LoadData(const IImport &loader, const GraphicsData &data) override;
+    void SaveData(const IExport &exporter) const override;
+
 };
 using CirclePtr = std::shared_ptr<Circle>;
 

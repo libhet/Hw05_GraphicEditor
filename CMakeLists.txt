@@ -9,8 +9,8 @@ add_executable(
         main.cpp
 
         src/graphics_types.h
-        src/graphics_model.h
         src/graphics_view.h
+        src/graphics_model.h
         src/graphics_controller.h
         src/graphics_export.h
         src/graphics_import.h
@@ -28,7 +28,7 @@ add_executable(
         src/graphics_import/import_svg.cpp
         src/graphics_export/export_my_format.cpp
         src/graphics_import/import_my_format.cpp
-        src/graphics_types.cpp)
+        src/graphics_types.cpp src/view/console_view.cpp src/view/console_view.h)
 
 #enable_testing()
 #include(CTest)
